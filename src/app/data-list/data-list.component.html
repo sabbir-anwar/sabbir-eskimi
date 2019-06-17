@@ -1,0 +1,52 @@
+<div class="container-fluid main-content">
+    <div class="row">
+      <div class="col-md-4">
+          <h3 class="title-1 m-b-10">Data table</h3>
+      </div>
+      <div class="col-md-12" *ngIf="itemdetail">
+          <h4>Name: {{itemdetail.name}}</h4>
+          <p>Language: {{itemdetail.language}}</p>
+          <p>Type: {{itemdetail.type}}</p>
+          <p>Rating: {{itemdetail.rating.average}}</p>
+          <p>Premiered: {{itemdetail.premiered}}</p>
+          <p>Network Name: {{itemdetail.network.name}}</p>
+          <p>Official Site: {{itemdetail.officialSite}}</p>
+          <p>URL: {{itemdetail.url}}</p>
+      </div>
+      <div class="col-md-12">
+            <div class="table-responsive table--no-card m-b-20">
+                <table class="table table-borderless table-striped table-common">
+                    <thead>
+                        <tr>
+                          <th>ID</th>    
+                          <th>Name</th>
+                          <th>Language</th>
+                          <th>Type</th>
+                          <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of items; index as i" (click)="seeDetailView(item)">
+                          <td>{{item.id}}</td>
+                          <td>{{item.name}}</td>
+                          <td>{{item.language}}</td>
+                          <td>{{item.type}}</td>
+                          <td>{{item.rating.average}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                  </ul>
+                </nav>
+            </div>
+      </div>
+    </div>
+  
+  </div>
+  
