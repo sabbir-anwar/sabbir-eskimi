@@ -1,0 +1,63 @@
+<div class="container-fluid main-content">
+    <h3 class="title-1">Series List</h3>
+    <div class="modal-wrapper" *ngIf="itemdetail">
+        <div class="modal-contain">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header text-center">TV Series Detail</div>
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3 class="text-center title-2">{{itemdetail.name}}</h3>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Language: {{itemdetail.language}}</li>
+                            <li class="list-group-item">Type: {{itemdetail.type}}</li>
+                            <li class="list-group-item">Rating: {{itemdetail.rating.average}}</li>
+                            <li class="list-group-item">Premiered: {{itemdetail.premiered}}</li>
+                            <li class="list-group-item">Network Name: {{itemdetail.network.name}}</li>
+                            <li class="list-group-item">Official Site: {{itemdetail.officialSite}}</li>
+                            <li class="list-group-item">URL: {{itemdetail.url}}</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive table--no-card m-b-20">
+                <table class="table table-borderless table-striped table-common">
+                    <thead>
+                        <tr>
+                          <th style="cursor: pointer;" (click)="changeSortProperty('id')">ID</th>    
+                          <th style="cursor: pointer;" (click)="changeSortProperty('name')">Name</th>
+                          <th style="cursor: pointer;" (click)="changeSortProperty('lan')">Language</th>
+                          <th style="cursor: pointer;" (click)="changeSortProperty('type')">Type</th>
+                          <th style="cursor: pointer;" (click)="changeSortProperty('rating')">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="cursor: pointer;" *ngFor="let item of currentPageData; index as i"   (click)="seeDetailView(item)">
+                            <td>{{item.id}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.language}}</td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.rating.average}}</td>
+                        </tr>  
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#" (click)="prev()">Previous</a></li>
+                        <li class="page-item" *ngFor="let i of pages">
+                        <a class="page-link" *ngIf="currentPage+1 == i" style="background-color:#d5d5d5" href="#" (click)="onPagenationBtnClick(i)">{{i}} </a>
+                        <a class="page-link" *ngIf="currentPage+1 != i"  href="#" (click)="onPagenationBtnClick(i)">{{i}}</a></li>
+                        <li class="page-item"><a class="page-link" href="#"(click)="next()">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+  
