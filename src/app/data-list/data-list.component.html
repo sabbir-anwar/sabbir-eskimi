@@ -1,21 +1,19 @@
 <div class="container-fluid main-content">
+    <h3>Data table</h3>
     <div class="row">
-      <div class="col-md-4">
-          <h3 class="title-1 m-b-10">Data table</h3>
-      </div>
-      <div class="col-md-12" *ngIf="itemdetail">
-          <h4>Name: {{itemdetail.name}}</h4>
-          <p>Language: {{itemdetail.language}}</p>
-          <p>Type: {{itemdetail.type}}</p>
-          <p>Rating: {{itemdetail.rating.average}}</p>
-          <p>Premiered: {{itemdetail.premiered}}</p>
-          <p>Network Name: {{itemdetail.network.name}}</p>
-          <p>Official Site: {{itemdetail.officialSite}}</p>
-          <p>URL: {{itemdetail.url}}</p>
-      </div>
+        <div class="col-md-12 detail-pop" *ngIf="itemdetail">
+            <h4>Name: {{itemdetail.name}}</h4>
+            <p>Language: {{itemdetail.language}}</p>
+            <p>Type: {{itemdetail.type}}</p>
+            <p>Rating: {{itemdetail.rating.average}}</p>
+            <p>Premiered: {{itemdetail.premiered}}</p>
+            <p>Network Name: {{itemdetail.network.name}}</p>
+            <p>Official Site: {{itemdetail.officialSite}}</p>
+            <p>URL: {{itemdetail.url}}</p>
+        </div>
       <div class="col-md-12">
-            <div class="table-responsive table--no-card m-b-20">
-                <table class="table table-borderless table-striped table-common">
+            <div class="table-responsive table--no-card">
+                <table class="table table-striped table-common">
                     <thead>
                         <tr>
                           <th>ID</th>    
@@ -26,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of items; index as i" (click)="seeDetailView(item)">
+                        <tr *ngFor="let item of currentPageData; index as i" (click)="seeDetailView(item)">
                           <td>{{item.id}}</td>
                           <td>{{item.name}}</td>
                           <td>{{item.language}}</td>
@@ -37,11 +35,12 @@
                 </table>
                 <nav aria-label="Page navigation example">
                   <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="#" (click)="prev()">Previous</a></li>
+                    <li class="page-item" *ngFor="let i of pages">
+                        <a class="page-link" href="#" *ngIf="currentPage+1 == i" (click)="onPagenationBtnClick(i)">{{i}}</a>
+                        <a class="page-link" href="#" *ngIf="currentPage+1 != i" (click)="onPagenationBtnClick(i)">{{i}}</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" (click)="next()">Next</a></li>
                   </ul>
                 </nav>
             </div>

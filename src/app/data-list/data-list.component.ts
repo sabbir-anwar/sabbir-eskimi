@@ -10,24 +10,73 @@ import {Router} from '@angular/router';
 })
 export class DataListComponent implements OnInit {
 
-  items=null;
+  items=<any>[];
   itemdetail=null;
+  numberOfpages=0;
+  pages=[];
+  numberOfItemsPerPage=35;
+  currentPage=0 ;
+  currentPageData=[];
+  selectedItemIndex=-1;
+
   constructor(private http:HttpClient,private router:Router) { }
 
   ngOnInit() {
-    this.http.get(getHost()).subscribe((res)=>{
-      console.log("res");
-      console.log(res); 
-      this.items=res;
-    },(err)=>{
-      console.log("error")
-      console.log(err)
-    }) 
+    this.getAllItem();
   }
 
+  getAllItem(){
+    this.http.get(getHost()).subscribe((res)=>{
+      console.log(res); 
+      this.items=res;
+      this.countNumberOfPages();
+    });
+  }
+  countNumberOfPages()
+  {
+    this.numberOfpages = this.items.length/this.numberOfItemsPerPage;
+
+    for(let c=1;c<this.numberOfpages;c++)
+    {
+     this.pages.push(c);
+    }
+  }
+  fetchCurrentPageData(){
+    let cursor = this.currentPage*this.numberOfItemsPerPage;
+    let index = 0;
+    for(let i=cursor;i<cursor+this.numberOfItemsPerPage;i++){
+      if(i>=this.items.length) break;
+      this.currentPageData[index] = this.items[i];
+      index++;
+    }
+  }
+  onPagenationBtnClick(number)
+  {
+    this.currentPage=parseInt(number)-1;
+    this.fetchCurrentPageData();
+
+  }
+  next()
+  {
+    
+   this.currentPage=this.currentPage+1;
+    if(this.currentPage>=this.numberOfpages)
+    {
+      this.currentPage=0;
+    }
+    console.log(this.currentPage);
+    this.fetchCurrentPageData();
+  }
+  prev(){
+    this.currentPage=this.currentPage-1;
+    if(this.currentPage<0){
+      this.currentPage=this.numberOfpages-1;
+    }
+    this.fetchCurrentPageData();
+  }
   seeDetailView(item) {
     this.itemdetail=item;
     console.log("seedetailview"+item);
     console.log(item);
-}
+  }
 }
